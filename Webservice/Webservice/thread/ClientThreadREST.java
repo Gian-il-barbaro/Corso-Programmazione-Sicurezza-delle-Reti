@@ -1,0 +1,137 @@
+import java.io.*; 
+import java.net.*;
+import java.net.URI;
+
+class ClientThreadREST
+{    
+    public static void main(String args[])
+    {
+        if(args.length < 3)    {
+            System.out.println("USAGE: java ClientREST tipofunzione op1 op2");
+        }   
+        else  {
+            RESTAPI service1=new RESTAPI("127.0.0.1", args[0], args[1], args[2], 0);
+            RESTAPI service2=new RESTAPI("127.0.0.1", args[0], args[1], args[2], 1);
+            RESTAPI service3=new RESTAPI("127.0.0.1", args[0], args[1], args[2], 2);
+            service1.start();
+            service2.start();
+            service3.start();
+        }
+    }
+}
+class RESTAPI extends Thread
+{
+    String server, service, param1, param2;
+    int port; // aggiungi questa variabile
+
+    public void run() {
+        long start = System.currentTimeMillis();
+
+        if (service.equals("calcola-somma")) {
+            System.out.println("Risultato: " + calcolaSomma(Float.parseFloat(param1), Float.parseFloat(param2)));
+        } else if (service.equals("calcola-numeri-primi")) {
+            System.out.println("Risultato: " + calcolaNumeriPrimi(Integer.parseInt(param1), Integer.parseInt(param2)));
+        } else {
+            System.out.println("Servizio non disponibile!");
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("Thread su porta " + (8000 + port) + " completato in " + (end - start) + " ms");
+    }
+
+
+    RESTAPI(String remoteServer, String srvc, String p1, String p2, int port)  {
+        server = new String(remoteServer);
+        service = new String(srvc);
+        param1 = new String(p1);
+        param2 = new String(p2);
+        this.port = port;
+    }
+
+    synchronized float calcolaSomma(float val1, float val2)  {
+        URL u = null;
+        float risultato=0;
+        int i;
+
+        try 
+        { 
+            URI uri = new URI(
+                "http",
+                null,
+                server,
+                8000 + port,
+                "/calcola-somma",
+                "param1=" + val1 + "&param2=" + val2,
+                null
+            );
+            u = uri.toURL();
+            System.out.println("URL aperto: " + u);
+        }
+        catch (Exception e) 
+        {
+            System.out.println("URL errato: " + e.getMessage());
+        }
+
+        try 
+        {
+            URLConnection c = u.openConnection();
+            c.connect();
+            BufferedReader b = new BufferedReader(new InputStreamReader(c.getInputStream()));
+            System.out.println("Lettura dei dati...");
+            String s;
+            while( (s = b.readLine()) != null ) {
+                System.out.println(s);
+                if((i = s.indexOf("somma"))!=-1)
+                    risultato = Float.parseFloat(s.substring(i+7));
+            }
+        }
+        catch (IOException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+    
+        return risultato;
+    }    
+
+    synchronized long calcolaNumeriPrimi(int val1, int val2)  {
+        URL u = null;
+        long risultato=0;
+        int i;
+        try 
+        { 
+            URI uri = new URI(
+                "http",
+                null,
+                server,
+                8000 + port,
+                "/calcola-numeri-primi",
+                "param1=" + val1 + "&param2=" + val2,
+                null
+            );
+            u = uri.toURL();
+            System.out.println("URL aperto: " + u);
+        }
+        catch (Exception e) 
+        {
+            System.out.println("URL errato: " + e.getMessage());
+        }
+        try 
+        {
+            URLConnection c = u.openConnection();
+            c.connect();
+            BufferedReader b = new BufferedReader(new InputStreamReader(c.getInputStream()));
+            System.out.println("Lettura dei dati...");
+            String s;
+            while( (s = b.readLine()) != null ) {
+                System.out.println(s);
+                if((i = s.indexOf("somma"))!=-1)
+                    risultato = Long.parseLong(s.substring(i+7));
+            }
+        }
+        catch (IOException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return risultato;
+    }
+}

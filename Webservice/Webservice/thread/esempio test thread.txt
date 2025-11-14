@@ -1,0 +1,44 @@
+URL aperto: http://127.0.0.1:8000/calcola-numeri-primi?param1=1&param2=1000000
+URL aperto: http://127.0.0.1:8000/calcola-numeri-primi?param1=1&param2=1000000
+URL aperto: http://127.0.0.1:8000/calcola-numeri-primi?param1=1&param2=1000000
+Lettura dei dati...
+{
+    "somma":37550402023
+}
+Risultato: 37550402023
+Thread completato in 1307 ms
+Lettura dei dati...
+{
+    "somma":37550402023
+}
+Risultato: 37550402023
+Thread completato in 2566 ms
+Lettura dei dati...
+{
+    "somma":37550402023
+}
+Risultato: 37550402023
+Thread completato in 3840 ms
+
+-------------------
+URL aperto: http://127.0.0.1:8001/calcola-numeri-primi?param1=1&param2=1000000
+URL aperto: http://127.0.0.1:8002/calcola-numeri-primi?param1=1&param2=1000000
+URL aperto: http://127.0.0.1:8000/calcola-numeri-primi?param1=1&param2=1000000
+Lettura dei dati...
+{
+    "somma":37550402023
+}
+Risultato: 37550402023
+Lettura dei dati...
+{
+    "somma":37550402023
+}
+Risultato: 37550402023
+Thread su porta 8000 completato in 457 ms
+Thread su porta 8001 completato in 459 ms
+Lettura dei dati...
+{
+    "somma":37550402023
+}
+Risultato: 37550402023
+Thread su porta 8002 completato in 514 ms
