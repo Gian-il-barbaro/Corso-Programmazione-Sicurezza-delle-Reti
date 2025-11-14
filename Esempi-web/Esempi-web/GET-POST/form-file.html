@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>File upload</h1>
+
+<p>Show a file-select field which allows a file to be chosen for upload:</p>
+<form action="http://localhost:8000/action" method="post" enctype="multipart/form-data">
+  <label for="myfile">Select a file:</label>
+  <input type="file" id="myfile" name="myfile"><br><br>
+  <input type="submit" value="Submit">
+</form>
+<br>
+<h1>File get</h1>
+<p>inserire il nome del file da ottenere da serverInput.c</p>
+<form action="http://localhost:8000/action" method="get" enctype="multipart/form-data">
+  <label for="myfile">Select a file:</label>
+  <input type="textfield" id="myfile" name="myfile" required><br><br>
+  <input type="submit" value="Invia">
+</form>
+
+</body>
+</html>
+
